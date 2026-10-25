@@ -1,0 +1,26 @@
+# 密钥：绝对不能提交
+.env
+
+# 本地练习草稿：跑不通的半成品，不进版本库（文件仍在本地）
+practice/
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# 编辑器与系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

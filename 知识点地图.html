@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>step1 / step2 知识点地图</title>
+<style>
+  :root{
+    --ink:#1F2328; --ink2:#454A52; --muted:#70747C; --faint:#9A9EA6;
+    --line:#E4E3DE; --line2:#F0EFEA; --bg:#FBFBF9; --card:#FFFFFF;
+    --blue:#185FA5; --blue-bg:#E6F1FB; --blue-dk:#0C447C;
+    --amber:#854F0B; --amber-bg:#FAEEDA;
+    --gray:#5F5E5A; --gray-bg:#F1EFE8;
+    --teal:#0F6E56; --teal-bg:#E1F5EE;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:0 20px 90px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:800px;margin:0 auto}
+
+  header{padding:52px 0 28px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:12px;letter-spacing:.12em;color:var(--faint);margin-bottom:12px}
+  h1{font-size:27px;font-weight:600;line-height:1.35;margin:0 0 14px}
+  .sub{color:var(--ink2);font-size:14.5px;margin:0}
+  .howto{
+    margin-top:24px;padding:16px 18px;background:var(--card);
+    border:1px solid var(--line);border-radius:10px;font-size:14px;color:var(--ink2);
+  }
+  .howto b{color:var(--ink)}
+  .howto ol{margin:8px 0 0;padding-left:20px}
+  .howto li{margin-bottom:4px}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+  .lg{font-size:12px;padding:4px 10px;border-radius:100px;border:1px solid var(--line);background:var(--card);color:var(--ink2)}
+  .lg i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
+
+  section{padding:40px 0 8px;border-bottom:1px solid var(--line2)}
+  section:last-of-type{border-bottom:none}
+  h2{font-size:19px;font-weight:600;margin:0 0 6px}
+  h2 .n{color:var(--faint);font-weight:400;margin-right:10px;font-size:15px}
+  .sec-desc{color:var(--muted);font-size:14px;margin:0 0 22px}
+
+  .kp{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:15px 18px 15px 18px;margin-bottom:10px;border-left:3px solid var(--line);
+  }
+  .kp.p0{border-left-color:#185FA5}
+  .kp.p1{border-left-color:#9A9EA6}
+  .kp.p2{border-left-color:#D8D7D0}
+  .kp-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:5px}
+  .kp .num{font-size:12px;color:var(--faint);font-variant-numeric:tabular-nums;font-weight:600}
+  .kp .name{font-size:15px;font-weight:600;color:var(--ink)}
+  .tag{font-size:11px;padding:2px 8px;border-radius:4px;letter-spacing:.02em;font-weight:600}
+  .tag.t0{background:var(--blue-bg);color:var(--blue-dk)}
+  .tag.t1{background:var(--gray-bg);color:var(--gray)}
+  .tag.t2{background:#F7F6F2;color:var(--faint)}
+  .kp-body{font-size:14px;color:var(--ink2);line-height:1.7}
+  .kp-body p{margin:0 0 8px}
+  .kp-body p:last-child{margin-bottom:0}
+  .where{
+    font-size:12px;color:var(--faint);margin:0 0 6px !important;
+    font-family:"SF Mono",Consolas,monospace;
+  }
+  code{
+    font-family:"SF Mono",Consolas,"Cascadia Mono",monospace;font-size:.87em;
+    background:#F1EFE8;padding:1px 5px;border-radius:4px;color:#3C3489;
+  }
+  details{margin-top:9px;border-top:1px dashed var(--line2);padding-top:8px}
+  summary{
+    font-size:12.5px;color:var(--blue);cursor:pointer;list-style:none;
+    user-select:none;display:inline-block;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"▸ ";font-size:10px}
+  details[open] summary::before{content:"▾ "}
+  details pre{
+    margin:9px 0 0;padding:11px 13px;background:#FAFAF7;border:1px solid var(--line2);
+    border-radius:6px;font-family:"SF Mono",Consolas,monospace;font-size:12.5px;
+    line-height:1.65;color:#333;overflow-x:auto;white-space:pre-wrap;
+  }
+
+  .final{
+    margin-top:12px;padding:22px 24px;background:var(--teal-bg);
+    border-radius:12px;border:1px solid #B7E0D0;
+  }
+  .final h3{font-size:16px;font-weight:600;margin:0 0 12px;color:#085041}
+  .final ol{margin:0;padding-left:22px;color:#0B5C4A;font-size:14px}
+  .final li{margin-bottom:7px}
+  .final li b{color:#04342C}
+
+  footer{padding:32px 0 0;color:var(--faint);font-size:12.5px}
+
+  @media print{
+    body{background:#fff;padding:0}
+    details{display:block}
+    details[open] pre{display:block}
+    .kp{page-break-inside:avoid}
+  }
+  @media (max-width:640px){
+    body{padding:0 16px 60px;font-size:14.5px}
+    h1{font-size:22px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">参考文档 · step1 / step2 全覆盖</div>
+  <h1>这两段代码里，你到底用到了哪些知识</h1>
+  <p class="sub">一共 28 条，分三层。代码短，但它踩到的知识点比看起来多——这不是你的问题，是这类代码本身就横跨三个领域。</p>
+
+  <div class="howto">
+    <b>怎么用这份东西，别一次读完：</b>
+    <ol>
+      <li>今天就只看标「现在就要懂」的 10 条（编号 01–05、16、17、21、24、25），其余全部跳过。</li>
+      <li>剩下的当字典用。哪天代码里看到不认识的东西，回来 Ctrl+F 搜。</li>
+      <li>每条下面有「30 秒验证」的，动手敲一遍比读十遍有用。</li>
+    </ol>
+  </div>
+
+  <div class="legend">
+    <span class="lg"><i style="background:#185FA5"></i>现在就要懂 · 10 条</span>
+    <span class="lg"><i style="background:#9A9EA6"></i>看懂就行 · 11 条</span>
+    <span class="lg"><i style="background:#D8D7D0"></i>先知道有这回事 · 7 条</span>
+  </div>
+</header>
+
+<section>
+  <h2><span class="n">第一层</span>Python 语言本身</h2>
+  <p class="sec-desc">这一层和 AI 毫无关系，纯粹是 Python 基本功。好消息是：这几条会了，后面所有代码都长一个样。</p>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">01</span><span class="name">字典和嵌套取值</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step1 第①步、第④步</p>
+      <p>字典就是「键 → 值」的对照表，用 <code>{}</code> 表示。<code>{"role": "user"}</code> 意思是：键 <code>role</code> 对应值 <code>user</code>。</p>
+      <p>API 返回的东西层层嵌套，所以取值要一层层剥：<code>data["choices"][0]["message"]["content"]</code>。读法是——先从 data 里拿 choices，它是一个列表，取第 0 个；再从那个字典里拿 message；再拿 content。</p>
+      <p><b>列表用数字索引，字典用键名。</b>记住这一句就够。</p>
+      <details><summary>30 秒验证</summary><pre>d = {"a": [{"b": "找到了"}]}
+print(d["a"][0]["b"])     # 找到了
+print(d["a"][1])          # 报错 IndexError，因为只有 1 个元素</pre></details>
+    </div>
+  </div>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">02</span><span class="name">json.dumps 和 json.loads</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step1 第②步、第④步</p>
+      <p>Python 的字典只活在 Python 里，发不到网络上。网络上传的只能是<b>文本</b>。所以要在两者之间来回翻译：</p>
+      <p><code>json.dumps(字典)</code> → 字典变文本（发出去之前）<br><code>json.loads(文本)</code> → 文本变字典（收到之后）</p>
+      <p>记法：<b>dumps 的 d 是 dump（倒出去），loads 的 l 是 load（装进来）。</b>结尾的 s 是 string，表示处理的是字符串。</p>
+      <details><summary>30 秒验证</summary><pre>import json
+text = json.dumps({"name": "小明", "age": 20})
+print(text)                 # {"name": "\u5c0f\u660e", "age": 20}
+print(type(text))           # &lt;class 'str'&gt;  这是文本
+back = json.loads(text)
+print(back["name"])         # 小明</pre></details>
+    </div>
+  </div>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">03</span><span class="name">字节和字符串：encode / decode</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step1 第②③步、step2 读每一行</p>
+      <p>这是新手报错最多的地方。<b>文本</b>（str）是给人看的，<b>字节</b>（bytes）是给机器传的。网络只认字节。</p>
+      <p><code>.encode("utf-8")</code>：文本 → 字节，<b>发出去之前</b>要做。<br><code>.decode("utf-8")</code>：字节 → 文本，<b>收到之后</b>要做。</p>
+      <p>规律一句话：<b>出编码，进解码。</b>搞反了就会看到 <code>TypeError: a bytes-like object is required</code> 或者满屏乱码。</p>
+      <details><summary>30 秒验证</summary><pre>s = "你好"
+b = s.encode("utf-8")
+print(b)          # b'\xe4\xbd\xa0\xe5\xa5\xbd'  这是字节
+print(len(b))     # 6   一个汉字占 3 个字节
+print(b.decode("utf-8"))   # 你好</pre></details>
+    </div>
+  </div>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">04</span><span class="name">try / except：出错不要直接崩</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step1 第③步、step2 发请求处</p>
+      <p>正常情况下代码一行行往下走。但如果网络断了、key 错了，Python 会直接抛异常停下，屏幕上全是红字。</p>
+      <p><code>try</code> 里放「可能出事的代码」，<code>except</code> 里放「出事了怎么办」。这样程序不会崩，你还能打印出人话。</p>
+      <p>我在这里专门接住了 <code>HTTPError</code>——它带着一个 <code>.code</code> 属性，就是状态码，所以能告诉你 401 还是 402。</p>
+      <p><b>重点不是语法，是意识：所有要联网的代码都必须包 try。</b>这是面试里「你怎么保证系统不崩」的第一层答案。</p>
+    </div>
+  </div>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">05</span><span class="name">环境变量和 os.environ.get</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step1 第 17 行</p>
+      <p>环境变量是操作系统里的一张「全局便签」，程序可以读，但不会写进代码文件。</p>
+      <p>为什么要绕这一圈？因为<b>代码会被上传到 GitHub</b>。一旦 key 写死在代码里，全世界的爬虫几分钟内就会扫到它，然后刷你的余额。这种事每年都在发生。</p>
+      <p><code>os.environ.get("DEEPSEEK_API_KEY")</code> 的意思是：去便签上看有没有这一条，没有就返回 <code>None</code>，不会报错。</p>
+      <p>step1 里我用 <code>or "..."</code> 做了个兜底，让你能直接把 key 填在代码里先跑起来——<b>这是练习期的临时手段，不是正确做法。</b>后面 step4 会改成从 <code>.env</code> 文件读。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">06</span><span class="name">if __name__ == "__main__"</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">两个文件最末尾</p>
+      <p>一个 .py 文件有两种命运：要么被你自己运行，要么被别的文件 import 进去用。</p>
+      <p>这一行的意思是：<b>只有「被直接运行」时才执行下面的 main()</b>；如果是被 import 的，就别自动跑起来。</p>
+      <p>不写会怎样？别人 import 你的文件时，你的代码会莫名其妙开始执行。所以这是标准写法，照抄就行。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">07</span><span class="name">空字符串是「假」的</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">step1 的 <code>if not API_KEY</code>、step2 的 <code>if piece</code></p>
+      <p>Python 里这些东西都算 <code>False</code>：空字符串 <code>""</code>、空列表 <code>[]</code>、空字典 <code>{}</code>、数字 <code>0</code>、<code>None</code>。</p>
+      <p>所以 <code>if not API_KEY:</code> 读作「如果 key 是空的，就提示用户」。<code>if piece:</code> 读作「如果这片内容不是空的，才打印」——因为有些片段确实没有正文，只有格式信息。</p>
+      <p>这比写 <code>if API_KEY == "":</code> 更地道，你会在所有 Python 项目里看到这个写法。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">08</span><span class="name">.get() 和 [] 的区别</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">step2 的 <code>chunk.get("choices")</code>、<code>delta.get("content")</code></p>
+      <p><code>d["key"]</code>：键不存在 → 直接抛 <code>KeyError</code>，程序停。<br><code>d.get("key")</code>：键不存在 → 返回 <code>None</code>，程序继续。</p>
+      <p><b>自己的数据用 []，外部来的数据用 .get()。</b>因为服务器返回的 JSON 结构你无法 100% 保证（比如最后一帧就没有 choices），用 [] 会直接崩。</p>
+      <p>这一条背后是个更大的原则：<b>不要相信外部输入。</b>面试里问「你怎么保证系统不崩」，这是第二个答案。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">09</span><span class="name">with 语句</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">step1 第③步、step2 读流的位置</p>
+      <p>网络连接用完必须关掉，否则资源泄漏。<code>with</code> 的作用是：<b>出了这个代码块，自动帮你关</b>，哪怕中途报错也会关。</p>
+      <p>不用 with 就得自己写 <code>response.close()</code>，还容易忘。属于「知道它负责收尾」就够。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">10</span><span class="name">for 循环遍历一个「文件一样的东西」</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">step2 的 <code>for raw_line in response</code></p>
+      <p>平时 <code>for</code> 遍历的是列表。这里遍历的是网络响应对象，但它被设计得像文件——可以一行一行读。</p>
+      <p>关键点：<b>它不会一次把内容全读进内存</b>，来一行给一行。这正是流式能成立的原因。如果换成 <code>response.read()</code>，就会卡住等全部收完。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">11</span><span class="name">字符串的 strip / startswith / 切片</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">step2 每一行的处理</p>
+      <p><code>.strip()</code>：去掉两头的空白和换行。服务器发的每行结尾都有 <code>\n</code>，不去掉没法比。</p>
+      <p><code>.startswith("data:")</code>：判断开头是不是这几个字符，返回 True/False。</p>
+      <p><code>line[5:]</code>：切片，从第 5 个字符取到末尾，就等于「砍掉前 5 个字符」。我写成 <code>line[len("data:"):]</code> 是为了让人一眼看出砍掉的是什么，效果一样。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">12</span><span class="name">print 的 end 和 flush</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">step2 打印每个碎片的地方</p>
+      <p><code>print()</code> 默认两个行为：结尾自动换行、内容先存缓冲区攒着。</p>
+      <p><code>end=""</code> 改成不换行，<code>flush=True</code> 改成立刻显示。</p>
+      <p><b>不写 flush，你会等全部结束才「唰」一下看到全文，然后以为自己流式写错了。</b>这个坑我提前告诉你。</p>
+    </div>
+  </div>
+
+  <div class="kp p2">
+    <div class="kp-head"><span class="num">13</span><span class="name">f-string 字符串插值</span><span class="tag t2">先知道</span></div>
+    <div class="kp-body">
+      <p class="where"><code>f"Bearer {API_KEY}"</code></p>
+      <p>字符串前面加个 f，里面用 <code>{}</code> 就能把变量的值塞进去。比 <code>"Bearer " + API_KEY</code> 好读，也不会因为类型不同报错。</p>
+    </div>
+  </div>
+
+  <div class="kp p2">
+    <div class="kp-head"><span class="num">14</span><span class="name">标准库和第三方库</span><span class="tag t2">先知道</span></div>
+    <div class="kp-body">
+      <p class="where">文件开头的几个 import</p>
+      <p><code>json</code>、<code>os</code>、<code>urllib</code> 是 Python 自带的，装好 Python 就有，不用 pip。<code>requests</code> 是别人写的，要 pip 装。</p>
+      <p>所以 step1 和 step2 你什么都不用装就能跑——这是故意的。等 step4 我们再换成 <code>requests</code>，那时候你会明白它好在哪。</p>
+    </div>
+  </div>
+
+  <div class="kp p2">
+    <div class="kp-head"><span class="num">15</span><span class="name">函数定义与 -> None</span><span class="tag t2">先知道</span></div>
+    <div class="kp-body">
+      <p class="where"><code>def main() -> None:</code></p>
+      <p><code>-&gt;</code> 后面写的是「这个函数返回什么类型」。<code>None</code> 就是什么都不返回。</p>
+      <p>这只是给人看的提示，Python 不会强制检查。<b>但它是专业代码的标配</b>，实习时你的 code review 会被提这个。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">第二层</span>HTTP 与网络</h2>
+  <p class="sec-desc">调大模型 90% 的工作量在这里。这一层搞懂了，「调 API」这件事就彻底不神秘了。</p>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">16</span><span class="name">HTTP 请求的四个零件</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step1 第②步</p>
+      <p>任何一个 HTTP 请求都由这四样组成，一个都不能少：</p>
+      <p><b>地址（URL）</b>——发给谁，<code>https://api.deepseek.com/chat/completions</code><br>
+      <b>方法（method）</b>——要干什么。POST = 我要提交数据给你处理<br>
+      <b>请求头（headers）</b>——附带说明，比如我是谁、我发的是什么格式<br>
+      <b>请求体（data）</b>——真正的内容，就是那段 JSON</p>
+      <p>你以后看任何 API 文档，都是在告诉你这四个填什么。看懂这一条，你就具备了「照文档接入任意 API」的能力。</p>
+    </div>
+  </div>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">17</span><span class="name">Authorization 和 Bearer token</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where"><code>"Authorization": f"Bearer {API_KEY}"</code></p>
+      <p>服务器怎么知道是你？靠请求头里的这一行。</p>
+      <p><code>Bearer</code> 的意思是「持有者」——谁拿着这个 token，就当作谁。所以 <b>token 等于密码，泄露就是钱没了。</b></p>
+      <p>注意 <code>Bearer</code> 后面有一个<b>空格</b>，很多人栽在这，报 401 查半天。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">18</span><span class="name">Content-Type：声明你发的格式</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where"><code>"Content-Type": "application/json"</code></p>
+      <p>告诉服务器「我发的是 JSON」。为什么必须说？因为同一堆字节，可能是 JSON，也可能是表单、是图片、是纯文本。服务器得知道怎么解析。</p>
+      <p>不发或发错，常见结果就是 400，或者服务器收到一堆乱码。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">19</span><span class="name">状态码：先看第一位</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">except 里打印 <code>error.code</code></p>
+      <p>不用背具体数字，记第一位就够：</p>
+      <p><b>2xx</b> 成功　<b>4xx</b> 你错了（请求有问题）　<b>5xx</b> 服务器错了</p>
+      <p>常用几个：<b>401</b> key 不对　<b>402</b> 余额不足　<b>429</b> 请求太频繁被限流　<b>400</b> 参数写错　<b>500/503</b> 服务器自己出问题</p>
+      <p><b>这个区分决定了要不要重试</b>——4xx 重试一百次也一样，5xx 和 429 才值得等一会儿再试。step3 就讲这个。</p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">20</span><span class="name">timeout 为什么必须有</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where"><code>urlopen(request, timeout=60)</code></p>
+      <p>不加超时，如果服务器卡住不回你，你的程序会<b>永远等下去</b>，界面看起来就是死了。</p>
+      <p>这是线上事故的经典成因之一。原则：<b>任何跨网络调用都必须设超时</b>，没有例外。</p>
+    </div>
+  </div>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">21</span><span class="name">SSE：服务器怎么「一行一行」发数据</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step2 整个读取循环</p>
+      <p>SSE 全称 Server-Sent Events，是一种「服务器持续往客户端推数据」的简单协议。规则非常朴素：</p>
+      <p><b>每行以 <code>data: </code> 开头，后面跟一段文本，行与行之间用空行隔开。</b>就这么两条。</p>
+      <p>所以你会看到空行（分隔用，要跳过）和 <code>data: [DONE]</code>（DeepSeek 自己约定的结束标记，不是 SSE 标准的一部分，但大家都在用）。</p>
+      <p><b>这个知识点直接对应实习工作内容</b>：你要做一个网页聊天界面，后端就得用 SSE 往前端推字。今天读的这段代码，将来是你写的那段代码。</p>
+    </div>
+  </div>
+
+  <div class="kp p2">
+    <div class="kp-head"><span class="num">22</span><span class="name">GET 和 POST 的区别</span><span class="tag t2">先知道</span></div>
+    <div class="kp-body">
+      <p>GET 是「我要东西」，参数挂在网址后面，能被浏览器历史记录下来。<br>POST 是「我给你东西」，参数在请求体里，不出现在网址上。</p>
+      <p>发对话内容用 POST，两个原因：内容太长塞不进网址；而且对话内容不该出现在日志和浏览记录里。</p>
+    </div>
+  </div>
+
+  <div class="kp p2">
+    <div class="kp-head"><span class="num">23</span><span class="name">urllib 和 requests 的关系</span><span class="tag t2">先知道</span></div>
+    <div class="kp-body">
+      <p>urllib 是 Python 自带的，功能全但用起来啰嗦（你看 step1 要手写 Request 对象）。</p>
+      <p>requests 是第三方的，一行 <code>requests.post(url, json=body, headers=h)</code> 就完事，还能自动处理很多细节。</p>
+      <p>我先让你用 urllib，是为了让你看见底下的结构。等 step4 换 requests 时，你会觉得「原来它替我做了这些」——这比直接用 requests 学到的多。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">第三层</span>大模型接口本身</h2>
+  <p class="sec-desc">这一层才是 agent 开发真正的地基。只有 5 条，但每一条后面都会反复用到。</p>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">24</span><span class="name">messages 数组和 role</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step1 第①步</p>
+      <p>对话不是一段文字，而是<b>一个列表，每个元素是一句话</b>，每句话带一个身份：</p>
+      <p><code>system</code> —— 设定人格和规则，相当于给模型的岗位说明<br>
+      <code>user</code> —— 用户说的<br>
+      <code>assistant</code> —— 模型之前说的</p>
+      <p><b>这是后面所有东西的基石。</b>工具调用的结果、检索到的资料、历史对话，全都是往这个列表里塞新元素。第 5 周手写 agent 循环，本质上就是在管理这个列表。</p>
+    </div>
+  </div>
+
+  <div class="kp p0">
+    <div class="kp-head"><span class="num">25</span><span class="name">模型没有记忆</span><span class="tag t0">现在就要懂</span></div>
+    <div class="kp-body">
+      <p class="where">step1 的 messages 只有一个元素</p>
+      <p>这是最反直觉、也最重要的一条：<b>模型不记得你上一句说了什么。</b>它是无状态的。</p>
+      <p>你觉得 ChatGPT 记得上下文，是因为<b>程序每次都把整段历史重新发了一遍</b>。第二轮请求里，messages 会有 3 条；第十轮就有 21 条。</p>
+      <p>由此推出三个后果，全是实习面试的高频题：<br>
+      · 对话越长，发的 token 越多，越贵越慢<br>
+      · 长到超过「上下文窗口」就会被截断或报错<br>
+      · 所以需要「记忆管理」——摘要、裁剪、检索历史</p>
+      <p><b>这一步只要记住「每轮都要全量重发」，就够了。</b></p>
+    </div>
+  </div>
+
+  <div class="kp p1">
+    <div class="kp-head"><span class="num">26</span><span class="name">message 和 delta 的区别</span><span class="tag t1">看懂就行</span></div>
+    <div class="kp-body">
+      <p class="where">step1 取 <code>message</code>，step2 取 <code>delta</code></p>
+      <p><b>message</b>：完整的一整段回答，非流式才有。<br><b>delta</b>：增量，这一片新增的内容，流式才有（delta 就是「差值」的意思）。</p>
+      <p>所以从 step1 改到 step2，取答案的位置必须跟着变，这是最容易被忽略的一处。</p>
+    </div>
+  </div>
+
+  <div class="kp p2">
+    <div class="kp-head"><span class="num">27</span><span class="name">choices 为什么是个列表</span><span class="tag t2">先知道</span></div>
+    <div class="kp-body">
+      <p class="where"><code>data["choices"][0]</code></p>
+      <p>因为接口支持「一次给我生成 N 个不同版本让你挑」，那个参数叫 <code>n</code>。我们没传，所以列表里永远只有 1 个，取 [0] 就对。</p>
+      <p>知道这个，你就不会觉得 <code>[0]</code> 是个莫名其妙的魔法数字。</p>
+    </div>
+  </div>
+
+  <div class="kp p2">
+    <div class="kp-head"><span class="num">28</span><span class="name">token 是什么</span><span class="tag t2">先知道</span></div>
+    <div class="kp-body">
+      <p>模型不按「字」算，按 <b>token</b> 算。一个 token 大约是一个英文单词，或者半个到一个汉字。</p>
+      <p>两件事都和它有关：<b>计费</b>按 token 算，<b>上下文窗口</b>（能一次吃多少）也按 token 算。</p>
+      <p>所以「省成本」和「避免超长」本质是同一件事：控制发过去的 token 数。现在不用深究怎么数，知道有这回事即可。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="final">
+    <h3>如果今天只记五件事</h3>
+    <ol>
+      <li><b>调大模型 = 发一个 HTTP POST。</b>地址、方法、请求头、请求体，四样凑齐就行。</li>
+      <li><b>dict 和 JSON 要互相翻译。</b>出用 dumps，进用 loads。</li>
+      <li><b>出编码，进解码。</b>发之前 encode，收之后 decode。</li>
+      <li><b>模型没有记忆，每轮都要把整段历史重发。</b>这句话能解释后面 80% 的设计。</li>
+      <li><b>联网的代码必须包 try，必须设 timeout。</b>这是工程意识的第一课，也是面试送分题。</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  参考文档 · 对应 steps/step1_first_call.py 与 steps/step2_first_stream.py · 遇到不认识的回来搜编号
+</footer>
+
+</div>
+</body>
+</html>
