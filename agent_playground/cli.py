@@ -74,9 +74,15 @@ def main():
         print(f"\n[配置错误] {error}\n")
         return 2
 
-    print(f"模型 {config.model}   输入 /exit 退出，/clear 清空上下文，/tools 看可用工具\n")
+    print(f"模型 {config.model}   输入 /exit 退出，/clear 清空上下文，/tools 看工具，/summary 看摘要\n")
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    # ★ 摘要单独存，不放进 messages。
+    #   放进去的话下次合并会在旧摘要上再叠一遍，越滚越长且不报错。
+    #   它和 messages 一起构成了「这段对话的全部记忆」：
+    #       messages = 最近的原文（有界）
+    #       summary  = 更早内容的浓缩（也有界）
+    summary = ""
 
     while True:
         try:
@@ -92,23 +98,41 @@ def main():
             break
         if user_text == "/clear":
             messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+            summary = ""
             print("上下文已清空\n")
             continue
         if user_text == "/tools":
             show_tools()
+            continue
+        if user_text == "/summary":
+            if summary:
+                print(f"\n  当前摘要（{len(summary)} 字）：")
+                print("  " + summary.replace("\n", "\n  "))
+                print(f"  原文 {len(messages)} 条\n")
+            else:
+                print(f"  还没压缩过。当前原文 {len(messages)} 条，"
+                      f"超过 {config.max_context_messages} 条才会触发压缩。\n")
             continue
 
         messages.append({"role": "user", "content": user_text})
 
         try:
             # agent 会自己决定要不要调工具、调几次。cli 只负责等结果。
-            result = run_agent(messages, config, on_tool=show_tool)
+            # summary 要传进去（上一轮的摘要），出来的新摘要要接住。
+            result = run_agent(messages, config, on_tool=show_tool, summary=summary)
         except LLMError as error:
             # 失败了要把刚加进去的那句问题撤掉，
             # 否则下一轮模型会看到一段「有问无答」的残缺对话。
             messages.pop()
             print(f"[调用失败] {error}\n")
             continue
+
+        summary = result.get("summary", "")
+
+        # 压缩发生在请求之前，但结果要等请求回来才知道。
+        # 所以这行显示在回答前面，而不是压缩真正发生的位置。
+        if result.get("summarized"):
+            print(f"   [摘要] 早期对话已压缩成 {len(summary)} 字，原文 {len(messages)} 条")
 
         if result["stop_reason"] == "max_steps":
             print(f"[已达到 {result['steps']} 轮上限，强制停止]")

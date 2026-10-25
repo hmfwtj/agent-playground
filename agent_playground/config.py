@@ -63,6 +63,11 @@ class Config:
         # 每次最多发多少条消息给模型。超了就从最早的开始丢。
         # 想亲眼看见裁剪发生，在 .env 里把它改成 6 试一次。
         self.max_context_messages = int(_read("MAX_CONTEXT_MESSAGES", "20"))
+        # 摘要压缩：历史超长时，把早期对话压成摘要，至少保留多少条原文。
+        # 设成 0 就关掉摘要，退回「直接砍掉」的老行为。
+        # 为什么要留这么多：一轮工具调用占 4 条消息，留 8 条大约等于最近 2 轮对话，
+        # 够模型接上当前话题。设太小会压得很勤，每次都多花一次请求。
+        self.summary_keep_recent = int(_read("SUMMARY_KEEP_RECENT", "8"))
         # 单价：元 / 百万 token。不填就是 0，只是不显示花费，不影响用。
         self.price_in = float(_read("PRICE_IN_PER_MTOK", "0"))
         self.price_out = float(_read("PRICE_OUT_PER_MTOK", "0"))
