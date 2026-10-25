@@ -1,0 +1,6 @@
+# 统一行尾：仓库里一律 LF，避免 Windows 和 Mac/Linux 之间出现「整文件都被修改」的假 diff
+* text=auto eol=lf
+
+# 例外：Windows 批处理文件必须是 CRLF，否则可能执行失败
+*.bat text eol=crlf
+*.cmd text eol=crlf
